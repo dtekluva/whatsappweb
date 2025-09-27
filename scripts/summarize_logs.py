@@ -557,7 +557,8 @@ def _severity_emoji(occ: int) -> str:
 
 SLACK_DEFAULT_CHANNEL = os.getenv("SLACK_CHANNEL", "C09H94MKUP5")
 SLACK_API_BASE = os.getenv("SLACK_API_BASE", "https://slack.com/api")
-
+print(SLACK_DEFAULT_CHANNEL)
+print(SLACK_API_BASE)
 
 def build_slack_blocks_for_summary(filename: str, model: str, summary: str) -> dict:
     # Try to parse the unique-issues format; if it fails, fall back to plain text
