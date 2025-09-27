@@ -706,8 +706,10 @@ def main(argv: List[str]) -> int:
             if args.slack and slack_token:
                 filename = os.path.basename(path)
                 payload = build_slack_blocks_for_summary(filename, args.model, summary)
+                print(args.slack_channel)
                 try:
                     resp = slack_post_message(slack_token, args.slack_channel, payload)
+                    print(resp)
                     if not resp.get("ok"):
                         print(f"Warning: Slack API error: {resp}", file=sys.stderr)
                     else:
