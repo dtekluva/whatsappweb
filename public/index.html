@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Web Clone</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fab fa-whatsapp"></i> WhatsApp Web Clone</h1>
+                <div class="status-indicator">
+                    <span id="connectionStatus" class="status disconnected">Disconnected</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- QR Code Section -->
+            <div id="qrSection" class="qr-section">
+                <button id="hideQrBtn" class="hide-qr-btn" title="Hide QR Code">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="qr-container">
+                    <h2>Scan QR Code</h2>
+                    <p>Open WhatsApp on your phone and scan this QR code to connect</p>
+                    <div id="qrCode" class="qr-code">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Generating QR Code...</p>
+                        </div>
+                    </div>
+                    <div class="qr-instructions">
+                        <ol>
+                            <li>Open WhatsApp on your phone</li>
+                            <li>Tap Menu or Settings and select WhatsApp Web</li>
+                            <li>Point your phone to this screen to capture the code</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Show QR Button (hidden by default) -->
+            <button id="showQrBtn" class="show-qr-btn hidden" title="Show QR Code">
+                <i class="fas fa-qrcode"></i>
+            </button>
+
+            <!-- Chat Interface -->
+            <div id="chatInterface" class="chat-interface hidden">
+                <div class="chat-sidebar">
+                    <div class="sidebar-header">
+                        <h3>Chats</h3>
+                        <div class="sidebar-actions">
+                            <button id="viewLogsBtn" class="btn-icon" title="View Message Logs">
+                                <i class="fas fa-file-alt"></i>
+                            </button>
+                            <button id="refreshChats" class="btn-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="chatList" class="chat-list">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading chats...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-main">
+                    <div class="chat-header">
+                        <div id="currentChatInfo" class="current-chat-info">
+                            <h3>Select a chat to start messaging</h3>
+                        </div>
+                    </div>
+
+                    <div id="messagesContainer" class="messages-container">
+                        <div class="welcome-message">
+                            <i class="fab fa-whatsapp"></i>
+                            <h3>Welcome to WhatsApp Web Clone</h3>
+                            <p>Select a chat from the sidebar or send a new message below</p>
+                        </div>
+                    </div>
+
+                    <div class="message-input-container">
+                        <form id="messageForm" class="message-form">
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    id="phoneNumber"
+                                    placeholder="Phone number (e.g., 1234567890)"
+                                    class="phone-input"
+                                    required
+                                >
+                                <input
+                                    type="text"
+                                    id="messageInput"
+                                    placeholder="Type a message..."
+                                    class="message-input"
+                                    required
+                                >
+                                <button type="submit" class="send-button">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Toast Notifications -->
+        <div id="toastContainer" class="toast-container"></div>
+
+        <!-- Logs Modal -->
+        <div id="logsModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-file-alt"></i> Message Logs - Target Groups</h3>
+                    <button id="closeLogsModal" class="btn-icon">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="logsStatus" class="logs-status">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading logs...</p>
+                        </div>
+                    </div>
+                    <div id="logsContent" class="logs-content hidden">
+                        <div id="logsList" class="logs-list"></div>
+                        <div id="logViewer" class="log-viewer hidden">
+                            <div class="log-viewer-header">
+                                <button id="backToLogsList" class="btn-secondary">
+                                    <i class="fas fa-arrow-left"></i> Back to Files
+                                </button>
+                                <h4 id="currentLogFile"></h4>
+                            </div>
+                            <div id="logFileContent" class="log-file-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
