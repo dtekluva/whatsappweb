@@ -23,6 +23,8 @@ import sys
 import json
 import time
 import argparse
+from datetime import date
+
 # Target group names to monitor (should match server.js configuration)
 TARGET_GROUP_NAMES = [
     'retail all-stars',
@@ -49,12 +51,18 @@ def find_most_recent_log_files(log_dir: str = "message-logs") -> dict:
     # Group files by sanitized group name
     group_files = {}
 
+    # Get today's date
+    today = date.today()
+
+    # Format as YYYY-MM-DD
+    formatted_date = today.strftime("%Y-%m-%d")
+
     for filename in os.listdir(log_dir):
         if not filename.endswith('.txt') or 'summary' in filename:
             continue
 
         # Extract date from filename pattern: {group}-messages-YYYY-MM-DD.txt
-        if '-messages-' not in filename:
+        if '-messages-' not in filename or formatted_date not in filename:
             continue
 
         parts = filename.split('-messages-')
@@ -676,6 +684,7 @@ def main(argv: List[str]) -> int:
         # Auto-discover most recent files for each target group
         print(f"Auto-discovering most recent log files in '{args.log_dir}'...")
         recent_files = find_most_recent_log_files(args.log_dir)
+        print("RECENT-FILES", recent_files)
 
         if not recent_files:
             print(f"No log files found for target groups in '{args.log_dir}'")
